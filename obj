@@ -1,0 +1,69 @@
+import wollok.game.*
+
+class Personajes{
+    var property vida = 100
+    var property dano = 50
+    
+    method ataque(entidad){
+        
+        return entidad.vida(entidad.vida() - dano)
+    }
+    
+
+}
+
+class Heroe inherits Personajes{
+    var property estamina= 50
+    var property esta_protegido = false
+    var property position = game.center()
+    
+    method image() = "images.jpg"
+    
+    method comprobar_estamina(){
+        return estamina < 10
+    }
+    
+    method proteger(){
+        esta_protegido = esta_protegido.negate()
+    }
+    
+    method ataque_especial(enemigo){
+        self.comprobar_estamina()
+        estamina -= 10
+        return enemigo.vida((enemigo.vida()-(dano * 1.5)))
+    }
+    
+    
+}
+
+class Enemigo inherits Personajes{
+    
+    override method ataque(entidad){
+        if (entidad.esta_protegido()){
+            return entidad.estamina(entidad.estamina()-10)
+        }
+        return entidad.vida(entidad.vida() - dano)
+    }
+        
+}
+
+class Enemigos_ld inherits Enemigo{
+    var x = 10.randomUpTo(30).truncate(0)
+    var y = 10.randomUpTo(30).truncate(0)
+    
+    var property position = game.at(x,y)  
+    
+    method image() = "enemigo.png"
+    
+    override method ataque(enemigo){
+        return enemigo.vida(enemigo.vida() - dano)
+    }
+    
+    
+}
+
+class Jefes inherits Personajes{
+    
+    
+    
+}
