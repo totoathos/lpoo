@@ -1,0 +1,21 @@
+import wollok.game.*
+import juego.*
+
+const heroe = new Heroe()
+const enemigo = new Enemigos_ld()
+
+
+program juego {
+    game.width(70)
+    game.height(45)
+    game.cellSize(10)
+    game.boardGround("pj.jpg")
+    game.title("dungeon :V")
+    game.addVisual(enemigo)
+    game.addVisualCharacter(heroe)
+    game.onCollideDo(heroe, { elemento => 
+        game.say(heroe, "Hola!")
+    })
+    keyboard.g().onPressDo{ game.say(heroe, "juego")}
+    game.start()
+}
