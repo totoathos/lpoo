@@ -8,7 +8,7 @@ class Personajes{
         
         return entidad.vida(entidad.vida() - dano)
     }
-    
+
 
 }
 
