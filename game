@@ -1,5 +1,5 @@
 import wollok.game.*
-import juego.*
+import obj.*
 
 const heroe = new Heroe()
 const enemigo = new Enemigos_ld()
