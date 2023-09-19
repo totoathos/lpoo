@@ -67,3 +67,48 @@ class Jefes inherits Personajes{
     
     
 }
+
+
+class Oleadas {
+	var cant_enemigos =[]
+	var aleatoria = 15.randomUpTo(20).truncate(0)
+	var multiplicador = 1
+	var division = 2.25
+	var nivel = 1
+	
+	method comprobar_nivel(){
+		if(nivel<=4){
+			multiplicador = 1
+			return "Principiante"
+		}
+		
+		if(5<nivel and nivel<=9){
+			multiplicador = 1.25
+			return "intermedio"
+		}
+		
+		if(10<nivel and nivel<=15){
+			multiplicador = 1.5
+			return "avanzado"
+		}
+		return " "
+	}
+	
+	method comprobar_enemigos(){
+		return cant_enemigos.isEmpty()
+	}
+	
+	method avanzar_oleadas(){
+		if(self.comprobar_enemigos()){
+			nivel += 1
+		}
+	}
+	
+	method crear_enemigos(){
+		(1 .. aleatoria).forEach{n => cant_enemigos.add(new Enemigo(vida = 75*multiplicador, dano = 30*multiplicador))}
+	}
+	
+	method crear_jefes(){
+		
+	}
+}
