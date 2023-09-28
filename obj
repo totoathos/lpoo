@@ -5,11 +5,9 @@ class Personajes{
     var property dano = 50
     
     method ataque(entidad){
-        
         return entidad.vida(entidad.vida() - dano)
     }
-
-
+    
 }
 
 class Heroe inherits Personajes{
@@ -19,8 +17,12 @@ class Heroe inherits Personajes{
     
     method image() = "images.jpg"
     
+    method aumentar_estamina(){
+    	if (estamina <= 91){estamina += 10}
+    }
+    
     method comprobar_estamina(){
-        return estamina < 10
+        return estamina < 10  
     }
     
     method proteger(){
