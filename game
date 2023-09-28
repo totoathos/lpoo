@@ -6,16 +6,19 @@ const enemigo = new Enemigos_ld()
 
 
 program juego {
-    game.width(70)
-    game.height(45)
-    game.cellSize(10)
+    game.width(20)
+    game.height(12)
     game.boardGround("pj.jpg")
+    
     game.title("dungeon :V")
     game.addVisual(enemigo)
     game.addVisualCharacter(heroe)
+    
+    
     game.onCollideDo(heroe, { elemento => 
         game.say(heroe, "Hola!")
     })
-    keyboard.g().onPressDo{ game.say(heroe, "juego")}
+    keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
+    keyboard.g().onPressDo{ game.say(heroe, "I'm Wolloktastic")}
     game.start()
 }
