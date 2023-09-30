@@ -40,22 +40,46 @@ class Heroe inherits Personajes{
 
 class Enemigo inherits Personajes{
     
+    var x = 5.randomUpTo(20).truncate(0)
+    var y = 5.randomUpTo(12).truncate(0)
+    var property position = game.at(x,y)
+    
+    method image() = "images.jpg"
+    
     override method ataque(entidad){
         if (entidad.esta_protegido()){
             return entidad.estamina(entidad.estamina()-10)
         }
         return entidad.vida(entidad.vida() - dano)
     }
-        
+    
+    method seguir(heroe){
+    	var posicion_heroe = heroe.position()
+    	var destino_x = position.x() + if(posicion_heroe.x() > position.x()) 1 else -1
+    	var destino_y = position.y() + if(posicion_heroe.y() > position.y()) 1 else -1
+    	
+    	self.mover(destino_x,destino_y)
+    }
+    
+    method evitar(enemigo){
+    	var posicion = enemigo.position()
+    	var destino_x = position.x() + if(posicion_heroe.x() == position.x()) 1 else -1
+    	var destino_y = position.y() + if(posicion_heroe.y() == position.y()) 1 else -1
+    	
+    	self.mover(destino_x,destino_y)
+    	
+    }
+    
+    method mover(destinox,destinoy){
+    	position = game.at(destinox,destinoy)
+    }
 }
 
 class Enemigos_ld inherits Enemigo{
-    var x = 10.randomUpTo(30).truncate(0)
-    var y = 10.randomUpTo(30).truncate(0)
     
-    var property position = game.at(x,y)  
+     
     
-    method image() = "enemigo.png"
+    override method image() = "enemigo.png"
     
     override method ataque(enemigo){
         return enemigo.vida(enemigo.vida() - dano)
@@ -72,8 +96,8 @@ class Jefes inherits Personajes{
 
 
 class Oleadas {
-	var cant_enemigos =[]
-	var aleatoria = 15.randomUpTo(20).truncate(0)
+	var property cant_enemigos =[]
+	var aleatoria = 5.randomUpTo(10).truncate(0)
 	var multiplicador = 1
 	var division = 2.25
 	var nivel = 1
