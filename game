@@ -2,7 +2,7 @@ import wollok.game.*
 import obj.*
 
 const heroe = new Heroe()
-const enemigo = new Enemigos_ld()
+const Oleada = new Oleadas()
 
 
 program juego {
@@ -11,14 +11,21 @@ program juego {
     game.boardGround("pj.jpg")
     
     game.title("dungeon :V")
-    game.addVisual(enemigo)
+    Oleada.crear_enemigos()
+    Oleada.cant_enemigos().forEach{n => game.addVisual(n)}
     game.addVisualCharacter(heroe)
     
     
     game.onCollideDo(heroe, { elemento => 
         game.say(heroe, "Hola!")
     })
+    
+    game.onCollideDo(heroe, { elemento => 
+        game.say(heroe, "Hola!")
+    })
     keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
     keyboard.g().onPressDo{ game.say(heroe, "I'm Wolloktastic")}
+    keyboard.j().onPressDo{Oleada.cant_enemigos().forEach{n => n.seguir(heroe)}}
+    game.onTick(1000, 'seguirlos',{=> Oleada.cant_enemigos().forEach{n => n.seguir(heroe)}})
     game.start()
 }
