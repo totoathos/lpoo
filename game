@@ -1,5 +1,5 @@
 import wollok.game.*
-import juego.*
+import obj.*
 
 const heroe = new Heroe()
 const Oleada = new Oleadas()
@@ -15,12 +15,12 @@ program juego {
     Oleada.cant_enemigos().forEach{n => game.onTick(1600.randomUpTo(2100), 'moverse', {n.seguir(heroe); n.evitar()})}
     game.addVisualCharacter(heroe)
     
-    game.onCollideDo(heroe, { elemento => 
-        game.say(heroe, "Hola!")
+    game.onCollideDo(heroe, {enemigo => 
+    	enemigo.ataque(heroe)
     })
-
+	
     keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
-    keyboard.g().onPressDo{ game.say(heroe, "I'm Wolloktastic")}
+    keyboard.g().onPressDo{ game.say(heroe, "Vida:" + heroe.vida())}
  //   game.onTick(1500, 'seguirlos',{=> Oleada.cant_enemigos().forEach{n => n.seguir(heroe) ; n.evitar()}})
     game.start()
 }
