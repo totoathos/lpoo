@@ -12,10 +12,10 @@ ataque estilo +-
 jefes +
 
 sistema de oleadas -
-delete visual +
+delete visual -
 15 a 1 -
 
-colisiones +
+colisiones +-
 seguimiento al jugador -
 proyectiles +
 sistema de combates +
