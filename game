@@ -12,8 +12,8 @@ program juego {
     game.title("dungeon")
     //coleccion creada para almzacenar a los enemigos
     Oleada.crear_enemigos()
-    Oleada.cant_enemigos().forEach{n => game.addVisual(n)}
-    Oleada.cant_enemigos().forEach{n => game.onTick(1600.randomUpTo(2100), 'moverse', {n.seguir(heroe); n.evitar()})}
+    Oleada.cantidad_enemigos().forEach{n => game.addVisual(n)}
+    Oleada.cantidad_enemigos().forEach{n => game.onTick(1600.randomUpTo(2100), 'Perseguir', {n.seguir(heroe); n.no_obstruir()})}
     game.addVisualCharacter(heroe)
     
     game.onCollideDo(heroe, {enemigo => 
