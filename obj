@@ -32,7 +32,7 @@ class Heroe inherits Personajes{
     var property rango_de_ataque_y_positivo = [position.y(), position.y()+1, position.y()+2]
 	var property rango_de_ataque_y_negativo = [position.y()-2, position.y()-1, position.y()]    
     
-    method image() = "image.jpg"
+    method image() = "pj.jpg"
     
     method aumentar_estamina(){
     	if (estamina <= 91){estamina += 10}
@@ -71,7 +71,7 @@ class Enemigo inherits Personajes{
     var destino_x = 0
     var destino_y = 0
     
-    method image() = "images.jpg"
+    method image() = "enemigo.jpg"
     
     override method ataque(entidad){
         if (entidad.esta_protegido()){
