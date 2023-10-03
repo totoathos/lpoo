@@ -23,6 +23,6 @@ program juego {
 	//tecla h para comprobar estamina y la g para ver la vida, esto lo usamos para comprobar en nuestros tests
     keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
     keyboard.g().onPressDo{ game.say(heroe, "Vida:" + heroe.vida())}
-	//game.onTick(1500, 'seguirlos',{=> Oleada.cant_enemigos().forEach{n => n.seguir(heroe) ; n.evitar()}})
+
     game.start()
 }
