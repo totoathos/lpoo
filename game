@@ -8,7 +8,7 @@ const Oleada = new Oleadas()
 program juego {
 	game.width(30)
     game.height(16)
-    game.boardGround("pj.jpg")
+    game.boardGround("fondo.jpg")
     game.title("dungeon :V")
     Oleada.crear_enemigos()
     Oleada.cant_enemigos().forEach{n => game.addVisual(n)}
@@ -21,6 +21,6 @@ program juego {
 	
     keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
     keyboard.g().onPressDo{ game.say(heroe, "Vida:" + heroe.vida())}
- //   game.onTick(1500, 'seguirlos',{=> Oleada.cant_enemigos().forEach{n => n.seguir(heroe) ; n.evitar()}})
+	//game.onTick(1500, 'seguirlos',{=> Oleada.cant_enemigos().forEach{n => n.seguir(heroe) ; n.evitar()}})
     game.start()
 }
