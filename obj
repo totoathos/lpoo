@@ -62,8 +62,8 @@ class Heroe inherits Personajes{
     
 }
 
-class Enemigo inherits Personajes{
-    
+class Enemigo_Corta_Distancia inherits Personajes{
+    //Por Default, asignamos que el enemigo global sea de corta distancia
     var x = 5.randomUpTo(20).truncate(0)
     var y = 5.randomUpTo(12).truncate(0)
     var property position = game.at(x,y)
@@ -73,6 +73,7 @@ class Enemigo inherits Personajes{
     
     method image() = "enemigo.jpg"
     
+    //comprueba que si el heroe esta protegido para sacar estamina o vida
     override method ataque(entidad){
         if (entidad.esta_protegido()){
             entidad.estamina(entidad.estamina()-10)
@@ -91,7 +92,7 @@ class Enemigo inherits Personajes{
     }
     
     
-   method evitar(){
+   method no_obstruir(){
    	
    	personajes.forEach{elemento => 
    		if(game.colliders(self).contains(elemento) and elemento.tipo() == "enemigo"){
@@ -108,11 +109,11 @@ class Enemigo inherits Personajes{
     }
 }
 
-class Enemigos_ld inherits Enemigo{
+class Enemigos_Larga_Distancia inherits Enemigo_Corta_Distancia{
     
      
     
-    override method image() = "enemigo.png"
+    override method image() = "enemigo.jpg"
     
     override method ataque(enemigo){
         enemigo.vida(enemigo.vida() - dano)
@@ -128,33 +129,34 @@ class Jefes inherits Personajes{
 }
 
 
-class Oleadas {
-	var property cant_enemigos =[]
-	var aleatoria = 5.randomUpTo(10).truncate(0)
-	var multiplicador = 1
+class Oleadas{
+	var property cantidad_enemigos =[]
+	var generador_enemigos = 5.randomUpTo(10).truncate(0)
+	var dificultad = 1
 	var division = 2.25
 	var nivel = 1
 	
+	//comprueba el nivel de la oleada para luego aumentar la dificultad automaticamente
 	method comprobar_nivel(){
 		if(nivel<=4){
-			multiplicador = 1
+			dificultad = 1
 			return "Principiante"
 		}
 		
 		if(5<nivel and nivel<=9){
-			multiplicador = 1.25
+			dificultad = 1.25
 			return "intermedio"
 		}
 		
 		if(10<nivel and nivel<=15){
-			multiplicador = 1.5
+			dificultad = 1.5
 			return "avanzado"
 		}
 		return " "
 	}
 	
 	method comprobar_enemigos(){
-		return cant_enemigos.isEmpty()
+		return cantidad_enemigos.isEmpty()
 	}
 	
 	method avanzar_oleadas(){
@@ -163,8 +165,9 @@ class Oleadas {
 		}
 	}
 	
+	//para crear los enemigos evaluamos la oleada para determinar la dificultad
 	method crear_enemigos(){
-		(1 .. aleatoria).forEach{n => cant_enemigos.add(new Enemigo(vida = 75*multiplicador, dano = 30*multiplicador))}
+		(1 .. generador_enemigos).forEach{n => cantidad_enemigos.add(new Enemigo_Corta_Distancia(vida = 75*dificultad, dano = 30*dificultad))}
 	}
 	
 	method crear_jefes(){
