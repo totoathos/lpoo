@@ -5,6 +5,7 @@ const heroe = new Heroe()
 const Oleada = new Oleadas()
 
 
+
 program juego {
 	game.width(30)
     game.height(16)
@@ -15,11 +16,14 @@ program juego {
     Oleada.cantidad_enemigos().forEach{n => game.addVisual(n)}
     Oleada.cantidad_enemigos().forEach{n => game.onTick(1600.randomUpTo(2100), 'Perseguir', {n.seguir(heroe); n.no_obstruir()})}
     game.addVisualCharacter(heroe)
+   
     
-    game.onCollideDo(heroe, {enemigo => 
-    	enemigo.ataque(heroe)
-    })
-
+    //game.onCollideDo(heroe, {enemigo => 
+    	//enemigo.ataque(heroe)
+    //})
+    
+    //keyboard.t().onPressDo{heroe.ataque(Oleada.cantidad_enemigos().filter{n => n.position() == heroe.position()})}
+	keyboard.t().onPressDo{heroe.ataque()}
 	//tecla h para comprobar estamina y la g para ver la vida, esto lo usamos para comprobar en nuestros tests
     keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
     keyboard.g().onPressDo{ game.say(heroe, "Vida:" + heroe.vida())}
