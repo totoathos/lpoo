@@ -16,11 +16,29 @@ class Personajes{
     }
     
     method eliminar_adversario(adversario){
-    	self.comprobar_vida(adversario)
-    	game.removeVisual(adversario)
+    	if(self.comprobar_vida(adversario)){
+    		game.removeVisual(adversario)
+    	}
     }
     
 }
+
+class Rango_ataque {
+	var x = 0
+	var y = 0
+	var position = game.at(x,y)
+	var diag_abajoder = game.at(x + 1, y - 1)
+	var diag_arribader = game.at(x + 1, y + 1)
+	var diag_abajoizq = game.at(x - 1, y - 1)
+	var diag_arribaizq = game.at(x - 1, y + 1)
+	
+}
+
+//Crear objetos a partir de la clase y darles una lista de posicion acorde
+//a el tipo, ej: ataque_derecha tendra la lista de posicion de este estilo
+// [x, y, x + 1, y + 1, y- 1, diag_arribader, diag_abajoder]
+
+
 
 class Heroe inherits Personajes{
     var property estamina= 50
@@ -45,6 +63,8 @@ class Heroe inherits Personajes{
 		rango_de_ataque_y_negativo = [position.y()-2, position.y()-1, position.y()]    
     }
     
+    
+    
     method comprobar_estamina(){
         return estamina < 10  
     }
@@ -64,8 +84,8 @@ class Heroe inherits Personajes{
 
 class Enemigo_Corta_Distancia inherits Personajes{
     //Por Default, asignamos que el enemigo global sea de corta distancia
-    var x = 5.randomUpTo(20).truncate(0)
-    var y = 5.randomUpTo(12).truncate(0)
+    var property x = 5.randomUpTo(20).truncate(0)
+    var property y = 5.randomUpTo(12).truncate(0)
     var property position = game.at(x,y)
     const property tipo = "enemigo"
     var destino_x = 0
@@ -141,6 +161,7 @@ class Oleadas{
 			dificultad = 1
 			return "Principiante"
 		}
+		
 		
 		if(5<nivel and nivel<=9){
 			dificultad = 1.25
