@@ -74,6 +74,13 @@ class Heroe inherits Personajes{
     		new Rango_ataque(lista_rangos = [game.at(position.x() - 1, 0), diag_arribaizq, diag_abajoizq], extension_imagen = "izquierda.jpg"),
     		new Rango_ataque(lista_rangos = [game.at(0, position.y() - 1), diag_abajoder, diag_abajoizq], extension_imagen = "abajo.jpg")
     		)}
+
+//(1..4).forEach { n =>
+//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(position.x() + 1, 0), diag_arribader, diag_abajoder], extension_imagen = "derecha.jpg"))
+//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(0, position.y() + 1), diag_arribader, diag_arribaizq], extension_imagen = "arriba.jpg"))
+//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(position.x() - 1, 0), diag_arribaizq, diag_abajoizq], extension_imagen = "izquierda.jpg"))
+//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(0, position.y() - 1), diag_abajoder, diag_abajoizq], extension_imagen = "abajo.jpg"))
+//	    }
     }
     
     method comprobar_estamina(){
