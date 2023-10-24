@@ -21,22 +21,17 @@ class Personajes{
     	}
     }
     
+    
+    
 }
 
 class Rango_ataque {
-	var property x = 0
-	var property y = 0
-	var property position = game.at(x,y)
 	var property lista_rangos
 	var extension_imagen
 	
 	method image() = extension_imagen
 }
 
-
-//Crear objetos a partir de la clase y darles una lista de posicion acorde
-//a el tipo, ej: ataque_derecha tendra la lista de posicion de este estilo
-// [x, y, x + 1, y + 1, y- 1, diag_arribader, diag_abajoder]
 
 
 
@@ -45,11 +40,8 @@ class Heroe inherits Personajes{
     var property esta_protegido = false
     var property position = game.center()
     const property tipo = "heroe"
-    //var property rango_de_ataque_x_positivo = [position.x(), position.x()+1, position.x()+2]
-    //var property rango_de_ataque_x_negativo = [position.x()-2, position.x()-1, position.x()]
-    //var property rango_de_ataque_y_positivo = [position.y(), position.y()+1, position.y()+2]
-	//var property rango_de_ataque_y_negativo = [position.y()-2, position.y()-1, position.y()]    
     var property rangos = []
+    var property direccion = "Abajo"
     
     method image() = "pj.jpg"
     
@@ -57,30 +49,35 @@ class Heroe inherits Personajes{
     	if (estamina <= 91){estamina += 10}
     }
     
-    //method redefinir_rango(){ 
-    //	rango_de_ataque_x_positivo = [position.x(), position.x()+1, position.x()+2]
-    //	rango_de_ataque_x_negativo = [position.x()-2, position.x()-1, position.x()]
-    //	rango_de_ataque_y_positivo = [position.y(), position.y()+1, position.y()+2]
-	//	rango_de_ataque_y_negativo = [position.y()-2, position.y()-1, position.y()]    
-    //}
+    method cambiar_direccion(estado_direccion){
+    	direccion = estado_direccion
+    	self.definir_rangos(rangos)
+    	
+    }
     
-    method anadir_rangos(){
+    method definir_rangos(lista){
       var diag_abajoder = game.at(position.x() + 1, position.y() - 1)
 	  var diag_arribader = game.at(position.x() + 1, position.y() + 1)
 	  var diag_abajoizq = game.at(position.x() - 1, position.y() - 1)
 	  var diag_arribaizq = game.at(position.x() - 1, position.y() + 1)
-    	(1..4).forEach{n => rangos.add(new Rango_ataque(lista_rangos = [game.at(position.x() + 1, 0), diag_arribader, diag_abajoder], extension_imagen = "derecha.jpg"),
-    		new Rango_ataque(lista_rangos = [game.at(0, position.y() + 1), diag_arribader, diag_arribaizq], extension_imagen = "arriba.jpg"),
-    		new Rango_ataque(lista_rangos = [game.at(position.x() - 1, 0), diag_arribaizq, diag_abajoizq], extension_imagen = "izquierda.jpg"),
-    		new Rango_ataque(lista_rangos = [game.at(0, position.y() - 1), diag_abajoder, diag_abajoizq], extension_imagen = "abajo.jpg")
-    		)}
-
-//(1..4).forEach { n =>
-//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(position.x() + 1, 0), diag_arribader, diag_abajoder], extension_imagen = "derecha.jpg"))
-//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(0, position.y() + 1), diag_arribader, diag_arribaizq], extension_imagen = "arriba.jpg"))
-//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(position.x() - 1, 0), diag_arribaizq, diag_abajoizq], extension_imagen = "izquierda.jpg"))
-//	        rangos.add(new Rango_ataque(lista_rangos = [game.at(0, position.y() - 1), diag_abajoder, diag_abajoizq], extension_imagen = "abajo.jpg"))
-//	    }
+	  lista.clear()
+	  
+	  if(direccion == "Arriba"){
+	  	lista.add(diag_arribader, diag_arribaizq, position.y() + 1, position.y() + 2)
+	  }
+	  
+	  if(direccion == "Abajo"){
+	  	lista.add(diag_abajoder, diag_abajoizq, position.y() - 1, position.y() - 2)
+	  }
+	  
+	  if(direccion == "Derecha"){
+	  	lista.add(diag_arribader, diag_abajoder, position.x() + 1, position.x() + 2)
+	  }
+	  
+	  if(direccion == "Izquierda"){
+	  	lista.add(diag_arribaizq, diag_abajoizq, position.x() - 1, position.x() - 2)
+	  }
+	  
     }
     
     method comprobar_estamina(){
@@ -97,14 +94,6 @@ class Heroe inherits Personajes{
         return enemigo.vida((enemigo.vida()-(dano * 1.5)))
     }
     
-//    method comprobar_ataque(enemigo){
-//    	rangos.forEach{n => if(n.lista_rangos().contains(enemigo.position())){enemigo.vida(enemigo.vida() - dano)}}
-//    }
-    
-//    override method ataque(entidad){
-//    	self.anadir_rangos()
-//    	self.comprobar_ataque(entidad)
-//    }
     
 }
 
