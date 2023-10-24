@@ -97,14 +97,14 @@ class Heroe inherits Personajes{
         return enemigo.vida((enemigo.vida()-(dano * 1.5)))
     }
     
-    method comprobar_ataque(enemigo){
-    	rangos.forEach{n => if(n.lista_rangos().contains(enemigo.position())){enemigo.vida(enemigo.vida() - dano)}}
-    }
+//    method comprobar_ataque(enemigo){
+//    	rangos.forEach{n => if(n.lista_rangos().contains(enemigo.position())){enemigo.vida(enemigo.vida() - dano)}}
+//    }
     
-    override method ataque(entidad){
-    	self.anadir_rangos()
-    	self.comprobar_ataque(entidad)
-    }
+//    override method ataque(entidad){
+//    	self.anadir_rangos()
+//    	self.comprobar_ataque(entidad)
+//    }
     
 }
 
