@@ -1,4 +1,5 @@
 import wollok.game.*
+import objaa.*
 
 const personajes = game.allVisuals()
 
@@ -17,27 +18,17 @@ class Personajes{
     
     method eliminar_adversario(adversario){
     	if(self.comprobar_vida(adversario)){
+    		Oleada.cantidad_enemigos().remove(adversario)
     		game.removeVisual(adversario)
     	}
-    }
-    
-    
+    }   
     
 }
-
-class Rango_ataque {
-	var property lista_rangos
-	var extension_imagen
-	
-	method image() = extension_imagen
-}
-
-
 
 
 class Heroe inherits Personajes{
     var property estamina= 50
-    var property esta_protegido = false
+    var property estado = "normal"
     var property position = game.center()
     const property tipo = "heroe"
     var property rangos = []
@@ -51,31 +42,35 @@ class Heroe inherits Personajes{
     
     method cambiar_direccion(estado_direccion){
     	direccion = estado_direccion
-    	self.definir_rangos(rangos)
+    	self.definir_rangos()
     	
     }
     
-    method definir_rangos(lista){
-      var diag_abajoder = game.at(position.x() + 1, position.y() - 1)
-	  var diag_arribader = game.at(position.x() + 1, position.y() + 1)
-	  var diag_abajoizq = game.at(position.x() - 1, position.y() - 1)
-	  var diag_arribaizq = game.at(position.x() - 1, position.y() + 1)
-	  lista.clear()
+    method definir_rangos(){
+//    var diag_abajoder = game.at(position.x() + 1, position.y() - 1)
+//	  var diag_arribader = game.at(position.x() + 1, position.y() + 1)
+//	  var diag_abajoizq = game.at(position.x() - 1, position.y() - 1)
+//	  var diag_arribaizq = game.at(position.x() - 1, position.y() + 1)
+	  rangos.clear()
 	  
 	  if(direccion == "Arriba"){
-	  	lista.add(diag_arribader, diag_arribaizq, position.y() + 1, position.y() + 2)
+	  	rangos = [position.y() + 1, position.y() + 2]
+	  	console.println(rangos)
 	  }
 	  
 	  if(direccion == "Abajo"){
-	  	lista.add(diag_abajoder, diag_abajoizq, position.y() - 1, position.y() - 2)
+	  	rangos = [position.y() - 1, position.y() - 2]
+	  	console.println(rangos)
 	  }
 	  
 	  if(direccion == "Derecha"){
-	  	lista.add(diag_arribader, diag_abajoder, position.x() + 1, position.x() + 2)
+	  	rangos = [position.x() + 1, position.x() + 2]
+	  	console.println(rangos)
 	  }
 	  
 	  if(direccion == "Izquierda"){
-	  	lista.add(diag_arribaizq, diag_abajoizq, position.x() - 1, position.x() - 2)
+	  	rangos = [position.x() - 1, position.x() - 2]
+	  	console.println(rangos)
 	  }
 	  
     }
@@ -85,7 +80,7 @@ class Heroe inherits Personajes{
     }
     
     method proteger(){
-        esta_protegido = esta_protegido.negate()
+        estado = "protegido"
     }
     
     method ataque_especial(enemigo){
@@ -93,16 +88,15 @@ class Heroe inherits Personajes{
         estamina -= 10
         return enemigo.vida((enemigo.vida()-(dano * 1.5)))
     }
+    method comprobar_ataque(enemigo){
+   		//rangos.forEach{n => if((rangos.contains(enemigo.x())) or (rangos.contains(enemigo.y()))){enemigo.vida(enemigo.vida() - dano)}}
+		if((rangos.contains(enemigo.x())) and position.y() == enemigo.y() or (rangos.contains(enemigo.y())) and position.x() == enemigo.x()){enemigo.vida(enemigo.vida() - dano)}
+    }
 
-//    method comprobar_ataque(enemigo){
-//    	rangos.forEach{n => if(n.lista_rangos().contains(enemigo.position())){enemigo.vida(enemigo.vida() - dano)}}
-//    }
-
-//    override method ataque(entidad){
-//    	self.anadir_rangos()
-//    	self.comprobar_ataque(entidad)
-//    }
-    
+    override method ataque(entidad){
+  		self.comprobar_ataque(entidad)
+  		self.eliminar_adversario(entidad)
+	}
     
 }
 
@@ -119,13 +113,13 @@ class Enemigo_Corta_Distancia inherits Personajes{
     
     //comprueba que si el heroe esta protegido para sacar estamina o vida
     override method ataque(entidad){
-        if (entidad.esta_protegido()){
+        if (entidad.estado() == "protegido"){
             entidad.estamina(entidad.estamina()-10)
         }
         entidad.vida(entidad.vida() - dano)
     }
     
-
+   
     
     method seguir(heroe){
     	var posicion_heroe = heroe.position()
@@ -155,8 +149,6 @@ class Enemigo_Corta_Distancia inherits Personajes{
 
 class Enemigos_Larga_Distancia inherits Enemigo_Corta_Distancia{
     
-     
-    
     override method image() = "enemigo.jpg"
     
     override method ataque(enemigo){
@@ -174,7 +166,7 @@ class Jefes inherits Personajes{
 
 
 class Oleadas{
-	var property cantidad_enemigos =[]
+	var property cantidad_enemigos = []
 	var generador_enemigos = 5.randomUpTo(10).truncate(0)
 	var dificultad = 1
 	var nivel = 1
