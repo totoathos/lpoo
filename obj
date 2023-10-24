@@ -93,6 +93,15 @@ class Heroe inherits Personajes{
         estamina -= 10
         return enemigo.vida((enemigo.vida()-(dano * 1.5)))
     }
+
+//    method comprobar_ataque(enemigo){
+//    	rangos.forEach{n => if(n.lista_rangos().contains(enemigo.position())){enemigo.vida(enemigo.vida() - dano)}}
+//    }
+
+//    override method ataque(entidad){
+//    	self.anadir_rangos()
+//    	self.comprobar_ataque(entidad)
+//    }
     
     
 }
@@ -116,14 +125,7 @@ class Enemigo_Corta_Distancia inherits Personajes{
         entidad.vida(entidad.vida() - dano)
     }
     
-//    method comprobar_ataque(enemigo){
-//    	rangos.forEach{n => if(n.lista_rangos().contains(enemigo.position())){enemigo.vida(enemigo.vida() - dano)}}
-//    }
 
-//    override method ataque(entidad){
-//    	self.anadir_rangos()
-//    	self.comprobar_ataque(entidad)
-//    }
     
     method seguir(heroe){
     	var posicion_heroe = heroe.position()
