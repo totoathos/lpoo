@@ -19,8 +19,8 @@ colisiones +-
 seguimiento al jugador -
 proyectiles +
 sistema de combates +
-rango del jugador EJ: posicion 1 = [-1, 0, 1, 2, 3] +
+rango del jugador EJ: posicion 1 = [-1, 0, 1, 2, 3] -
 
 
 
-orientacion del jugador +
+orientacion del jugador -
