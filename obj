@@ -47,40 +47,40 @@ class Heroe inherits Personajes{
     }
     
     method definir_rangos(){
-//    var diag_abajoder = game.at(position.x() + 1, position.y() - 1)
-//	  var diag_arribader = game.at(position.x() + 1, position.y() + 1)
-//	  var diag_abajoizq = game.at(position.x() - 1, position.y() - 1)
-//	  var diag_arribaizq = game.at(position.x() - 1, position.y() + 1)
 	  rangos.clear()
 	  
 	  if(direccion == "Arriba"){
 	  	rangos = [position.y() + 1, position.y() + 2]
-	  	console.println(rangos)
 	  }
 	  
 	  if(direccion == "Abajo"){
 	  	rangos = [position.y() - 1, position.y() - 2]
-	  	console.println(rangos)
 	  }
 	  
 	  if(direccion == "Derecha"){
 	  	rangos = [position.x() + 1, position.x() + 2]
-	  	console.println(rangos)
 	  }
 	  
 	  if(direccion == "Izquierda"){
 	  	rangos = [position.x() - 1, position.x() - 2]
-	  	console.println(rangos)
 	  }
 	  
+    }
+    
+    method cambiar_estado(nuevo_estado){
+    	estado = nuevo_estado
     }
     
     method comprobar_estamina(){
         return estamina < 10  
     }
     
+    method comprobar_estado(){
+    	return estado
+    }
+    
     method proteger(){
-        estado = "protegido"
+        self.cambiar_estado("protegido")
     }
     
     method ataque_especial(enemigo){
@@ -94,8 +94,14 @@ class Heroe inherits Personajes{
     }
 
     override method ataque(entidad){
-  		self.comprobar_ataque(entidad)
-  		self.eliminar_adversario(entidad)
+    	
+    	if(self.comprobar_estado() == "normal"){
+    		self.cambiar_estado("atacando")
+    		self.comprobar_ataque(entidad)
+  			self.eliminar_adversario(entidad)
+  			}
+  			
+			
 	}
     
 }
@@ -117,6 +123,7 @@ class Enemigo_Corta_Distancia inherits Personajes{
             entidad.estamina(entidad.estamina()-10)
         }
         entidad.vida(entidad.vida() - dano)
+        entidad.cambiar_estado("danado")
     }
     
    
@@ -198,6 +205,7 @@ class Oleadas{
 	method avanzar_oleadas(){
 		if(self.comprobar_enemigos()){
 			nivel += 1
+			
 		}
 	}
 	
