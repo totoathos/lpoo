@@ -10,6 +10,7 @@ class Personajes{
     method ataque(entidad){
         entidad.vida(entidad.vida() - dano)
         self.eliminar_adversario(entidad)
+        
     }
     
     method comprobar_vida(adversario){
@@ -91,6 +92,7 @@ class Heroe inherits Personajes{
         estamina -= 10
         return enemigo.vida((enemigo.vida()-(dano * 1.5)))
     }
+    
     method comprobar_ataque(){
    		
    		var matar1 = game.getObjectsIn(rangos.get(0))
@@ -98,14 +100,22 @@ class Heroe inherits Personajes{
 		//if((rangos.contains(enemigo.x())) and position.y() == enemigo.y() or (rangos.contains(enemigo.y())) and position.x() == enemigo.x()){console.println("atacando");enemigo.vida(enemigo.vida() - dano)}
     	if (not(matar1.isEmpty())) {
     		
-    		game.getObjectsIn(rangos.get(0)).forEach{a => 
+    		matar1.forEach{a => 
+    			
+    			console.println(a);
+    			a.vida(a.vida() - dano);
+    			self.eliminar_adversario(a);
     			return a 
+    	
     	}
+    	
     	if (not(matar2.isEmpty())){
    
-    		game.getObjectsIn(rangos.get(1).forEach{a => 
+    		matar2.forEach{a => 
+    			console.println(a);
+    			self.eliminar_adversario(a);
     			return a
-    		})
+    		}
     	}
     	}
     	
@@ -157,17 +167,7 @@ class Enemigo_Corta_Distancia inherits Personajes{
     }
     
     
-   method no_obstruir(){
-   	
-   	personajes.forEach{elemento => 
-   		if(game.colliders(self).contains(elemento) and elemento.tipo() == "enemigo"){
-   			destino_x = position.x() - 1
-   			destino_y = position.y() - 1
-   			self.mover(destino_x, destino_y)
-   		}
-   		
-   	}
-   }
+   
     
     method mover(destinox,destinoy){
     	position = game.at(destinox,destinoy)
