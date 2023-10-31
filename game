@@ -11,7 +11,7 @@ program juego {
     //coleccion creada para almzacenar a los enemigos
     Oleada.crear_enemigos()
     Oleada.cantidad_enemigos().forEach{n => game.addVisual(n) ;}
-    Oleada.cantidad_enemigos().forEach{n => game.onTick(1600.randomUpTo(2100), 'Perseguir', {n.seguir(heroe) ; n.no_obstruir()})}
+    Oleada.cantidad_enemigos().forEach{n => game.onTick(1600.randomUpTo(2100), 'Perseguir', {n.seguir(heroe)})}
     // remover tick al momento de ser atacado
     game.addVisualCharacter(heroe)
    
