@@ -21,8 +21,9 @@ program juego {
     })
     
     //keyboard.t().onPressDo{heroe.ataque(Oleada.cantidad_enemigos().filter{n => n.position() == heroe.position()})}
-	keyboard.t().onPressDo{Oleada.cantidad_enemigos().forEach{n => heroe.ataque(n) ; game.schedule(500, {heroe.cambiar_estado("normal")})}}
+	keyboard.t().onPressDo{heroe.ataque() ; game.schedule(500, {heroe.cambiar_estado("normal")})}
 	keyboard.f().onPressDo{heroe.proteger()}
+	
 	//tecla h para comprobar estamina y la g para ver la vida, esto lo usamos para comprobar en nuestros tests
     //keyboard.h().onPressDo{heroe.aumentar_estamina(); game.say(heroe, "estamina " + heroe.estamina())}
     //keyboard.g().onPressDo{ game.say(heroe, "Vida:" + heroe.vida())}
