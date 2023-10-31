@@ -50,20 +50,23 @@ class Heroe inherits Personajes{
 	  rangos.clear()
 	  
 	  if(direccion == "Arriba"){
-	  	rangos = [position.y() + 1, position.y() + 2]
+	    rangos = [game.at(position.x(),position.y()+1), game.at(position.x(),position.y()+2)]
 	  }
 	  
 	  if(direccion == "Abajo"){
-	  	rangos = [position.y() - 1, position.y() - 2]
+	  	//rangos = [[position.x(),position.y()-1], [position.x(),position.y()-2]]
+	    rangos = [game.at(position.x(),position.y()-1), game.at(position.x(),position.y()-2)]
+	  
 	  }
 	  
 	  if(direccion == "Derecha"){
-	  	rangos = [position.x() + 1, position.x() + 2]
-	  }
+	  	
+	    rangos = [game.at(position.x()+1,position.y()), game.at(position.x()+2,position.y())]
+	  	}
 	  
 	  if(direccion == "Izquierda"){
-	  	rangos = [position.x() - 1, position.x() - 2]
-	  }
+	    rangos = [game.at(position.x()-1,position.y()), game.at(position.x()-2,position.y())]
+	  	}
 	  
     }
     
@@ -88,17 +91,34 @@ class Heroe inherits Personajes{
         estamina -= 10
         return enemigo.vida((enemigo.vida()-(dano * 1.5)))
     }
-    method comprobar_ataque(enemigo){
-   		//rangos.forEach{n => if((rangos.contains(enemigo.x())) or (rangos.contains(enemigo.y()))){enemigo.vida(enemigo.vida() - dano)}}
-		if((rangos.contains(enemigo.x())) and position.y() == enemigo.y() or (rangos.contains(enemigo.y())) and position.x() == enemigo.x()){enemigo.vida(enemigo.vida() - dano)}
+    method comprobar_ataque(){
+   		
+   		var matar1 = game.getObjectsIn(rangos.get(0))
+   		var matar2 = game.getObjectsIn(rangos.get(1))
+		//if((rangos.contains(enemigo.x())) and position.y() == enemigo.y() or (rangos.contains(enemigo.y())) and position.x() == enemigo.x()){console.println("atacando");enemigo.vida(enemigo.vida() - dano)}
+    	if (not(matar1.isEmpty())) {
+    		
+    		game.getObjectsIn(rangos.get(0)).forEach{a => 
+    			return a 
+    	}
+    	if (not(matar2.isEmpty())){
+   
+    		game.getObjectsIn(rangos.get(1).forEach{a => 
+    			return a
+    		})
+    	}
+    	}
+    	
+    	
     }
 
-    override method ataque(entidad){
+    method ataque(){
     	
     	if(self.comprobar_estado() == "normal"){
+    		
     		self.cambiar_estado("atacando")
-    		self.comprobar_ataque(entidad)
-  			self.eliminar_adversario(entidad)
+    		self.comprobar_ataque()
+  			//self.eliminar_adversario(entidad)
   			}
   			
 			
@@ -174,7 +194,7 @@ class Jefes inherits Personajes{
 
 class Oleadas{
 	var property cantidad_enemigos = []
-	var generador_enemigos = 5.randomUpTo(10).truncate(0)
+	var generador_enemigos = 5.randomUpTo(6).truncate(0)
 	var dificultad = 1
 	var nivel = 1
 	
