@@ -35,7 +35,7 @@ class Heroe inherits Personajes{
     var property rangos = []
     var property direccion = "Abajo"
     
-    method image() = "pj.jpg"
+    method image() = "pj.png"
     
     method aumentar_estamina(){
     	if (estamina <= 91){estamina += 10}
@@ -99,28 +99,24 @@ class Heroe inherits Personajes{
    		var matar2 = game.getObjectsIn(rangos.get(1))
 		//if((rangos.contains(enemigo.x())) and position.y() == enemigo.y() or (rangos.contains(enemigo.y())) and position.x() == enemigo.x()){console.println("atacando");enemigo.vida(enemigo.vida() - dano)}
     	if (not(matar1.isEmpty())) {
-    		
     		matar1.forEach{a => 
-    			
-    			console.println(a);
     			a.vida(a.vida() - dano);
     			self.eliminar_adversario(a);
     			return a 
+    	}
+    	
     	
     	}
     	
     	if (not(matar2.isEmpty())){
-   
-    		matar2.forEach{a => 
-    			console.println(a);
+             matar2.forEach{a => 
+             	console.println(a);
     			self.eliminar_adversario(a);
     			return a
     		}
     	}
     	}
     	
-    	
-    }
 
     method ataque(){
     	
@@ -144,6 +140,7 @@ class Enemigo_Corta_Distancia inherits Personajes{
     const property tipo = "enemigo"
     var destino_x = 0
     var destino_y = 0
+    var rango = []
     
     method image() = "enemigo.jpg"
     
@@ -166,8 +163,6 @@ class Enemigo_Corta_Distancia inherits Personajes{
     	self.mover(destino_x,destino_y)
     }
     
-    
-   
     
     method mover(destinox,destinoy){
     	position = game.at(destinox,destinoy)
