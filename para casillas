@@ -1,0 +1,10 @@
+(0..game.height()).forEach{ p=>
+   		(0..game.width()).forEach{d=>
+   			const pepe = new Enemigo_Corta_Distancia(position = game.at(d,p))
+   			game.addVisual(pepe)
+   		}
+   	}
+
+
+abrir paint
+le damos a cambiar tamaño, vamos a pixeles y sacamos la relacion de aspecto
