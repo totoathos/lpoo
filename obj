@@ -125,10 +125,14 @@ class Heroe inherits Personajes{
     		self.cambiar_estado("atacando")
     		self.comprobar_ataque()
   			//self.eliminar_adversario(entidad)
-  			}
-  			
-			
+  			}		
 	}
+	
+	method mover(destinox,destinoy){
+    	self.position(game.at(destinox,destinoy))
+    }
+	
+	
     
 }
 
@@ -142,7 +146,7 @@ class Enemigo_Corta_Distancia inherits Personajes{
     var destino_y = 0
     var rango = []
     
-    method image() = "enemigo.jpg"
+    method image() = "enemigo.png"
     
     //comprueba que si el heroe esta protegido para sacar estamina o vida
     override method ataque(entidad){
@@ -151,9 +155,16 @@ class Enemigo_Corta_Distancia inherits Personajes{
         }
         entidad.vida(entidad.vida() - dano)
         entidad.cambiar_estado("danado")
+        self.alejar(entidad)
     }
     
-   
+   	method alejar(entidad){
+   		if(entidad.direccion()=="Derecha"){entidad.mover(entidad.position().x() + 1, entidad.position().y())} ; 
+        if(entidad.direccion()=="Izquierda"){entidad.mover(entidad.position().x() - 1, entidad.position().y())} ; 
+        if(entidad.direccion()=="Arriba"){entidad.mover(entidad.position().x(), entidad.position().y() - 1)} ; 
+        if(entidad.direccion() == "Abajo"){entidad.mover(entidad.position().x(), entidad.position().y() + 1)}
+   	}
+   	
     
     method seguir(heroe){
     	var posicion_heroe = heroe.position()
