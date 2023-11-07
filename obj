@@ -35,7 +35,7 @@ class Heroe inherits Personajes{
     var property rangos = []
     var property direccion = "Abajo"
     
-    method image() = "pj.png"
+    method image() = "pj.jpg"
     
     method aumentar_estamina(){
     	if (estamina <= 91){estamina += 10}
@@ -146,7 +146,7 @@ class Enemigo_Corta_Distancia inherits Personajes{
     var destino_y = 0
     var rango = []
     
-    method image() = "enemigo.png"
+    method image() = "enemigo1.jpg"
     
     //comprueba que si el heroe esta protegido para sacar estamina o vida
     override method ataque(entidad){
@@ -179,23 +179,36 @@ class Enemigo_Corta_Distancia inherits Personajes{
     	position = game.at(destinox,destinoy)
     }
 }
+class Proyectil inherits Enemigo_Corta_Distancia{
+	override method ataque(entidad){
+    	if (entidad.estado() == "protegido"){
+            entidad.estamina(entidad.estamina()-10)
+            }
+        entidad.vida(entidad.vida() - dano)
+        
+    }
+    override method image() = "fuego.jpg"
+}
 
 class Enemigos_Larga_Distancia inherits Enemigo_Corta_Distancia{
-    
-    override method image() = "enemigo.jpg"
-    
-    override method ataque(enemigo){
-        enemigo.vida(enemigo.vida() - dano)
+
+    method disparar(enemigo){
+    	var posicion_heroe = heroe.position()
+    	(enemigo.position(x)).forEach{n => if(posicion_heroe.x() > n){game.addVisual(proyectil)}}
     }
     
+    override method ataque(entidad){
+    	if (entidad.estado() == "protegido"){
+            entidad.estamina(entidad.estamina()-10)
+            }
+        entidad.vida(entidad.vida() - dano)
+        
+    }
+    override method image() = "enemigo.jpg"
     
 }
 
-class Jefes inherits Personajes{
-    
-    
-    
-}
+class Jefes inherits Personajes{}
 
 
 class Oleadas{
@@ -237,7 +250,7 @@ class Oleadas{
 	
 	//para crear los enemigos evaluamos la oleada para determinar la dificultad
 	method crear_enemigos(){
-		(1 .. generador_enemigos).forEach{n => cantidad_enemigos.add(new Enemigo_Corta_Distancia(vida = 75*dificultad, dano = 30*dificultad))}
+		(1 .. generador_enemigos).forEach{n => cantidad_enemigos.add(new Enemigos_Larga_Distancia(vida = 75*dificultad, dano = 30*dificultad)) ; cantidad_enemigos.add(new Enemigo_Corta_Distancia(vida = 75*dificultad, dano = 30*dificultad))}
 	}
 	
 	method crear_jefes(){
